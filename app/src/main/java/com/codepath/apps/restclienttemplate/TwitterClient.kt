@@ -62,7 +62,7 @@ class TwitterClient(context: Context) : OAuthBaseClient(
         // Can specify query string params directly or through RequestParams.
         val params = RequestParams()
         params.put("count", "25")
-//        params.put("since_id", 1)
+        params.put("since_id", 1)
         client.get(apiUrl, params, handler)
     }
 

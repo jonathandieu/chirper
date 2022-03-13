@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
 
@@ -13,12 +14,14 @@ class TimelineActivity : AppCompatActivity() {
         setContentView(R.layout.activity_timeline)
 
         client = TwitterApplication.getRestClient(this)
+
+        populateHomeTimeline()
     }
 
     fun populateHomeTimeline() {
         client.getHomeTimeline(object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON?) {
-                TODO("Not yet implemented")
+                Log.i(TAG, "onSuccess! (Home Timeline Populated) $json")
             }
 
             override fun onFailure(
@@ -27,10 +30,14 @@ class TimelineActivity : AppCompatActivity() {
                 response: String?,
                 throwable: Throwable?
             ) {
-                TODO("Not yet implemented")
+                Log.i(TAG, "onFailure :( $statusCode")
             }
 
 
         })
+    }
+
+    companion object {
+        val TAG = "TimelineActivity"
     }
 }
