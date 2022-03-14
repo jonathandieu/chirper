@@ -36,6 +36,10 @@ class TweetsAdapter(val tweets: List<Tweet>) : RecyclerView.Adapter<TweetsAdapte
 
 
         Glide.with(holder.itemView).load(tweet.user?.publicImageUrl).into(holder.ivProfileImage) // Safe check with ?
+
+        // Get the timestamp and set it
+        holder.tvTimestamp.text = tweet.timestamp
+
     }
 
     // Tells our adapter how many views will be in the recyclerView, or the length of tweets list
@@ -48,6 +52,8 @@ class TweetsAdapter(val tweets: List<Tweet>) : RecyclerView.Adapter<TweetsAdapte
         val ivProfileImage = itemView.findViewById<ImageView>(R.id.ivProfileImage)
         val tvUserName = itemView.findViewById<TextView>(R.id.tvUsername)
         val tvTweetBody = itemView.findViewById<TextView>(R.id.tvTweetBody)
+
+        val tvTimestamp = itemView.findViewById<TextView>(R.id.tvTimestamp)
 
     }
 

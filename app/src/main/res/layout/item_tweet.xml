@@ -24,17 +24,32 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="wontonjon" />
+        tools:text="WontonJon" />
 
     <TextView
         android:id="@+id/tvTweetBody"
+        android:layout_width="280dp"
+        android:layout_height="75dp"
+        android:layout_margin="10dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
+        app:layout_constraintTop_toBottomOf="@id/tvUsername"
+        tools:text="This is a real (albeit ridiculously super extra ultra mega entirely stupidly long [bordering on the absurd]) tweet that actually works definitely for sure." />
+
+    <TextView
+        android:id="@+id/tvTimestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toBottomOf="@id/tvUsername"
-        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="15dp"
+        android:text="25m"
+        app:layout_constraintBottom_toTopOf="@+id/tvTweetBody"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constrainedWidth="true"
-        tools:text="This is a real (albeit super extra long) tweet that actually works definitely for sure." />
+        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintStart_toEndOf="@+id/tvUsername"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
