@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
@@ -20,13 +21,30 @@ class TimelineActivity : AppCompatActivity() {
 
     val tweets = ArrayList<Tweet>()
 
+    // Variable to contain the SwipeRefreshLayout
+    lateinit var swipeContainer: SwipeRefreshLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
 
         client = TwitterApplication.getRestClient(this)
 
-        rvTweets =findViewById(R.id.rvTweets)
+        // Initialize the swiperefreshlayout
+        swipeContainer = findViewById(R.id.swipeContainer)
+
+        // Set refresh listener
+        swipeContainer.setOnRefreshListener {
+            Log.i(TAG, "Refreshing the timeline!")
+            populateHomeTimeline()
+        }
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light);
+
+        rvTweets = findViewById(R.id.rvTweets)
         adapter = TweetsAdapter(tweets)
 
         rvTweets.layoutManager = LinearLayoutManager(this)
@@ -41,9 +59,12 @@ class TimelineActivity : AppCompatActivity() {
                 val jsonArray = json.jsonArray
 
                 try {
+                    adapter.clear() // We need to clear out currently fetched tweets on refresh, to avoid having duplicates
                     val listoOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
                     tweets.addAll(listoOfNewTweetsRetrieved)
                     adapter.notifyDataSetChanged()
+                    // Now we call setRefreshing(false) to signal refresh has finished
+                    swipeContainer.setRefreshing(false) // Without this line, we'll continue seeing the refreshing icon
                 } catch (e: JSONException) {
                     Log.e(TAG, "JSON Exception $e")
                 }
