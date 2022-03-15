@@ -60,8 +60,8 @@ class TimelineActivity : AppCompatActivity() {
 
                 try {
                     adapter.clear() // We need to clear out currently fetched tweets on refresh, to avoid having duplicates
-                    val listoOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
-                    tweets.addAll(listoOfNewTweetsRetrieved)
+                    val listOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
+                    tweets.addAll(listOfNewTweetsRetrieved)
                     adapter.notifyDataSetChanged()
                     // Now we call setRefreshing(false) to signal refresh has finished
                     swipeContainer.setRefreshing(false) // Without this line, we'll continue seeing the refreshing icon
