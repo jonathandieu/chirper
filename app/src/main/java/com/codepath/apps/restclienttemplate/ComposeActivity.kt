@@ -3,6 +3,8 @@ package com.codepath.apps.restclienttemplate
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -24,6 +26,38 @@ class ComposeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_compose)
 
         etCompose = findViewById(R.id.etTweetCompose)
+
+
+        // Try to implement character count
+        etCompose.addTextChangedListener(object: TextWatcher {
+
+            // Fires off right before the text has changed
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Check for emptiness from the getgo
+                if (etCompose.text.isEmpty()) {
+                    btnTweet.isEnabled = false
+                }
+            }
+
+            // Fires off as the text is being changed
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val tweetContent = etCompose.text.toString()
+
+                if (tweetContent.isEmpty() || tweetContent.length > 280) {
+                    btnTweet.isEnabled = false
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Don't do anything
+                val tweetContent = etCompose.text.toString()
+                if (tweetContent.isNotEmpty() && tweetContent.length < 280) {
+                    btnTweet.isEnabled = true
+                }
+            }
+
+        })
+
         btnTweet = findViewById(R.id.btnTweet)
 
         // Init. client
