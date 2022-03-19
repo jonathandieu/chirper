@@ -14,7 +14,7 @@
         android:gravity="start|top"
         android:hint="What's shakin' bacon?"
         android:inputType="textMultiLine"
-        android:minLines="7"
+        android:minLines="10"
         android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,12 +1,12 @@
 package com.codepath.apps.restclienttemplate.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 
-class User {
-
-    var name: String = ""
-    var screenName: String = ""
-    var publicImageUrl: String = ""
+@Parcelize
+class User (var name: String = "",
+            var screenName: String = "", var publicImageUrl: String = ""): Parcelable {
 
     companion object {
         // We want a method that takes in a json object gotten from the callback, and convert it into data

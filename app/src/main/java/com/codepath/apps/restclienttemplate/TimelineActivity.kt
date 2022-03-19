@@ -71,10 +71,34 @@ class TimelineActivity : AppCompatActivity() {
 
             // Navigate to compose screen using an INTENT
             val intent = Intent(this, ComposeActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_CODE) // Deprecated, but lets us know where we came from
         }
         return super.onOptionsItemSelected(item)
     }
+
+    // Called when we come back from compose activity
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // REQUEST_CODE defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            // Get data from our intent (Our tweet)
+            val tweet = data?.getParcelableExtra("tweet") as Tweet
+
+            // Update the timeline
+            // Modifying the data source of tweets
+            tweets.add(0, tweet)
+
+            // Update adapter
+            adapter.notifyItemInserted(0)
+
+            // Scroll back up to see the new tweet
+            rvTweets.smoothScrollToPosition(0)
+        }
+
+
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     fun populateHomeTimeline() {
         client.getHomeTimeline(object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) { // No need for null check in onSuccess
@@ -109,5 +133,6 @@ class TimelineActivity : AppCompatActivity() {
 
     companion object {
         val TAG = "TimelineActivity"
+        val REQUEST_CODE = 10
     }
 }
